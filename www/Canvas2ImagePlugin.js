@@ -19,7 +19,7 @@
         }
         else {
             var canvas = (typeof canvasId === "string") ? document.getElementById(canvasId) : canvasId;
-            var imageData = canvas.toDataURL().replace(/data:image\/jpeg;base64,/,'');
+            var imageData = canvas.toDataURL('image/jpeg').replace(/data:image\/jpeg;base64,/,'');
             return cordova.exec(successCallback, failureCallback, "Canvas2ImagePlugin","saveImageDataToLibrary",[imageData]);
         }
     }
