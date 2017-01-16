@@ -1,7 +1,6 @@
 Canvas2ImagePlugin
 ============
 
-### NOTE: This plugin is NOT being actively maintained. I would love someone with a decent fork of it to take it over. Contact me if you are interested.
 
 This plugin allows you to save the contents of an HTML canvas tag to the iOS Photo Library, Android Gallery or WindowsPhone 8 Photo Album from your app.
 
@@ -41,6 +40,10 @@ function onDeviceReady()
     );
 }
 ```
+
+# Note
+This plugin now just saves JPEG-Files. PNG's no longer supported.
+
 
 ## License
 
