@@ -109,18 +109,19 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 			 * Environment.DIRECTORY_PICTURES ); //this throws error in Android
 			 * 2.2
 			 */
-			/*if (check >= 1) {
+			static final String appDirectoryName = "Anigram";
+			if (check >= 1) {
 				folder = Environment
-					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES,appDirectoryName);
 
 				if(!folder.exists()) {
 					folder.mkdirs();
 				}
 			} else {
 				folder = Environment.getExternalStorageDirectory();
-			}*/
+			}
 			
-			folder = Environment.getDataDirectory();
+			
 
 			File imageFile = new File(folder, "IMG-Anigram-" + date.toString() + ".jpg");
 
