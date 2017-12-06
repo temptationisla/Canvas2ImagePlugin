@@ -7,21 +7,26 @@
 //  MIT Licensed
 //
 
-  module.exports = {
+module.exports = {
 
-    saveImageDataToLibrary:function(successCallback, failureCallback, canvasId, fileName) {
-        // successCallback required
-        if (typeof successCallback != "function") {
-            console.log("Canvas2ImagePlugin Error: successCallback is not a function");
+    saveImageDataToLibrary: function (options) {
+
+        var defaults = { canvas: null, fileName: "IMG_" + new Date().getTime(), album: 'Apps', success: function () { }, failure: function () { } };
+        var settings = Object.assign({}, defaults, options);
+        // success required
+        if (typeof settings.success != "function") {
+            console.log("Canvas2ImagePlugin Error: success is not a function.");
         }
-        else if (typeof failureCallback != "function") {
-            console.log("Canvas2ImagePlugin Error: failureCallback is not a function");
+        else if (typeof settings.failure != "function") {
+            console.log("Canvas2ImagePlugin Error: failure is not a function.");
+        } else if (!settings.canvas) {
+            console.log("Canvas2ImagePlugin Error: no canvas is assigned.");
         }
         else {
-            var canvas = (typeof canvasId === "string") ? document.getElementById(canvasId) : canvasId;
-            var imageData = canvas.toDataURL('image/jpeg').replace(/data:image\/jpeg;base64,/,'');
-            return cordova.exec(successCallback, failureCallback, "Canvas2ImagePlugin", "saveImageDataToLibrary", [imageData, fileName ? fileName : null]);
+            var canvas = (typeof settings.canvas === "string") ? document.getElementById(settings.canvas) : settings.canvas;
+            var imageData = canvas.toDataURL('image/jpeg').replace(/data:image\/jpeg;base64,/, '');
+            return cordova.exec(settings.success, settings.failure, "Canvas2ImagePlugin", "saveImageDataToLibrary", [imageData, settings.fileName, settings.album]);
         }
     }
-  };
+};
 
