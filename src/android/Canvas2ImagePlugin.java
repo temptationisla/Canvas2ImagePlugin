@@ -126,7 +126,7 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 					+ c.get(Calendar.SECOND);
 					useFileName = "IMG_" + date.toString() + ".jpg";
 			}else{
-				useFileName = this.fileName + '.jpg';
+				useFileName = this.fileName + ".jpg";
 			}
 
 			File imageFile = new File(folder, useFileName);
