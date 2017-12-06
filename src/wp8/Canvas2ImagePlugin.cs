@@ -25,18 +25,22 @@ public class Canvas2ImagePlugin : BaseCommand
             {
                 imageStream.Seek(0, SeekOrigin.Begin);
 
-                string fileName = String.Format("c2i_{0:yyyyMMdd_HHmmss}", DateTime.Now);
+                string fileName = String.Format("IMG_{0:yyyyMMdd_HHmmss}", DateTime.Now);
+
+                if (options[1] != null)
+                    fileName = options[1];
+
                 var library = new MediaLibrary();
                 var picture = library.SavePicture(fileName, imageStream);
 
                 if (picture.Name.Contains(fileName))
                 {
-                    DispatchCommandResult(new PluginResult(PluginResult.Status.OK, 
+                    DispatchCommandResult(new PluginResult(PluginResult.Status.OK,
                         "Image saved: " + picture.Name));
                 }
                 else
                 {
-                    DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, 
+                    DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR,
                         "Failed to save image: " + picture.Name));
                 }
             }

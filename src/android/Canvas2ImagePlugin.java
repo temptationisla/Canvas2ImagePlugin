@@ -38,6 +38,7 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
     public static final int WRITE_PERM_REQUEST_CODE = 1;
     private CallbackContext callbackContext;
     private Bitmap bmp;
+	private String fileName;
 
 	@Override
 	public boolean execute(String action, JSONArray data,
@@ -56,7 +57,7 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 			if (bmp == null) {
 				callbackContext.error("The image could not be decoded");
 			} else {
-
+				this.fileName = data.optString(1);
                 this.bmp = bmp;
                 this.callbackContext = callbackContext;
 				// Save the image
@@ -83,21 +84,16 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 
 
 	private void savePhoto() {
-    
-        
+
+
 		File image = null;
-        
+
         Bitmap bmp = this.bmp;
         CallbackContext callbackContext = this.callbackContext;
 
 		try {
 			Calendar c = Calendar.getInstance();
-			String date = "" + c.get(Calendar.DAY_OF_MONTH)
-					+ c.get(Calendar.MONTH)
-					+ c.get(Calendar.YEAR)
-					+ c.get(Calendar.HOUR_OF_DAY)
-					+ c.get(Calendar.MINUTE)
-					+ c.get(Calendar.SECOND);
+
 
 			String deviceVersion = Build.VERSION.RELEASE;
 			Log.i("Canvas2ImagePlugin", "Android version " + deviceVersion);
@@ -119,10 +115,21 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 			} else {
 				folder = Environment.getExternalStorageDirectory();
 			}
-			
-			
 
-			File imageFile = new File(folder, "IMG-Anigram-" + date.toString() + ".jpg");
+			String useFileName;
+			if (this.fileName == null) {
+			String date = "" + c.get(Calendar.DAY_OF_MONTH)
+					+ c.get(Calendar.MONTH)
+					+ c.get(Calendar.YEAR)
+					+ c.get(Calendar.HOUR_OF_DAY)
+					+ c.get(Calendar.MINUTE)
+					+ c.get(Calendar.SECOND);
+					useFileName = "IMG_" + date.toString() + ".jpg";
+			}else{
+				useFileName = this.fileName + '.jpg';
+			}
+
+			File imageFile = new File(folder, useFileName);
 
 			FileOutputStream out = new FileOutputStream(imageFile);
 			bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
