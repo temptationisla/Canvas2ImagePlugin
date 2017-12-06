@@ -25,10 +25,7 @@ public class Canvas2ImagePlugin : BaseCommand
             {
                 imageStream.Seek(0, SeekOrigin.Begin);
 
-                string fileName = String.Format("IMG_{0:yyyyMMdd_HHmmss}", DateTime.Now);
-
-                if (options[1] != null)
-                    fileName = options[1];
+                string fileName = options[1];
 
                 var library = new MediaLibrary();
                 var picture = library.SavePicture(fileName, imageStream);

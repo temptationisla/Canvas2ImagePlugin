@@ -39,6 +39,7 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
     private CallbackContext callbackContext;
     private Bitmap bmp;
 	private String fileName;
+	private String album;
 
 	@Override
 	public boolean execute(String action, JSONArray data,
@@ -58,6 +59,7 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 				callbackContext.error("The image could not be decoded");
 			} else {
 				this.fileName = data.optString(1);
+				this.album = data.optString(2);
                 this.bmp = bmp;
                 this.callbackContext = callbackContext;
 				// Save the image
@@ -107,7 +109,7 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 			 */
 			if (check >= 1) {
 				folder = Environment
-					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES  + "/Anigram");
+					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES  + "/" + this.album);
 
 				if(!folder.exists()) {
 					folder.mkdirs();
@@ -116,21 +118,7 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 				folder = Environment.getExternalStorageDirectory();
 			}
 
-			String useFileName;
-			if (this.fileName == null) {
-			String date = "" + c.get(Calendar.DAY_OF_MONTH)
-					+ c.get(Calendar.MONTH)
-					+ c.get(Calendar.YEAR)
-					+ c.get(Calendar.HOUR_OF_DAY)
-					+ c.get(Calendar.MINUTE)
-					+ c.get(Calendar.SECOND);
-					useFileName = "IMG_" + date.toString() + ".jpg";
-			}else{
-				useFileName = this.fileName + ".jpg";
-			}
-
-			File imageFile = new File(folder, useFileName);
-
+			File imageFile = new File(folder, this.fileName + ".jpg");
 			FileOutputStream out = new FileOutputStream(imageFile);
 			bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
 			out.flush();
