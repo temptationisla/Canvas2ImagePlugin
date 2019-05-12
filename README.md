@@ -1,8 +1,9 @@
 Canvas2ImagePlugin
 ============
+This is the fork to https://github.com/tate-u/Canvas2ImagePlugin which is the fork to https://github.com/devgeeks/Canvas2ImagePlugin
 
 
-This plugin allows you to save the contents of an HTML canvas tag to the iOS Photo Library, Android Gallery or WindowsPhone 8 Photo Album from your app.
+This plugin allows you to save the contents of an HTML canvas tag from base64 to the iOS Photo Library, Android Gallery or WindowsPhone 8 Photo Album from your app.
 
 See an example project using it here: [https://github.com/devgeeks/Canvas2ImageDemo](https://github.com/devgeeks/Canvas2ImageDemo) - note: this app does not work in wp8.
 
@@ -11,15 +12,13 @@ Installation
 
 ### For Cordova 3.0.x:
 
-1. To add this plugin just type: `cordova plugin add https://github.com/tate-u/Canvas2ImagePlugin.git` or `phonegap local plugin add https://github.com/tate-u/Canvas2ImagePlugin.git`
-2. To remove this plugin type: `cordova plugin remove org.tate-u.Canvas2ImagePlugin` or `phonegap local plugin remove org.tate-u.Canvas2ImagePlugin`
+1. To add this plugin just type: `cordova plugin add https://github.com/temptationisla/Canvas2ImagePlugin.git` or `phonegap local plugin add https://github.com/temptationisla/Canvas2ImagePlugin.git`
 
-### NOTE: For older versions of Cordova (You will probably have to use tag 0.2.0)
 
 Usage:
 ------
 
-Call the `window.canvas2ImagePlugin.saveImageDataToLibrary()` method using success and error callbacks and the id attribute or the element object of the canvas to save:
+Call the `window.canvas2ImagePlugin.saveImageDataToLibrary()` method using success and error callbacks and base64 of the canvas to save:
 
 ### Example
 ```html
@@ -29,6 +28,7 @@ Call the `window.canvas2ImagePlugin.saveImageDataToLibrary()` method using succe
 ```javascript
 function onDeviceReady()
 {
+	var canvas = document.getElementById('myCanvas')
 	window.canvas2ImagePlugin.saveImageDataToLibrary(
         function(msg){
             console.log(msg);
@@ -36,7 +36,7 @@ function onDeviceReady()
         function(err){
             console.log(err);
         },
-        document.getElementById('myCanvas')
+        canvas.toDataURL("image/jpeg")
     );
 }
 ```
