@@ -1,6 +1,6 @@
 Canvas2ImagePlugin
 ============
-This is the fork to https://github.com/tate-u/Canvas2ImagePlugin which is the fork to https://github.com/devgeeks/Canvas2ImagePlugin
+This is the fork from https://github.com/tate-u/Canvas2ImagePlugin 
 
 
 This plugin allows you to save the contents of an HTML canvas tag from base64 to the iOS Photo Library, Android Gallery or WindowsPhone 8 Photo Album from your app.
