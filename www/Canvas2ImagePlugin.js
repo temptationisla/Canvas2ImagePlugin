@@ -9,24 +9,12 @@
 
 module.exports = {
 
-    saveImageDataToLibrary: function (options) {
-
+    saveImageDataToLibrary: function (success, failure, canvas) {
         var defaults = { canvas: null, fileName: "IMG_" + new Date().getTime(), album: 'Apps', success: function () { }, failure: function () { } };
-        var settings = Object.assign({}, defaults, options);
-        // success required
-        if (typeof settings.success != "function") {
-            console.log("Canvas2ImagePlugin Error: success is not a function.");
-        }
-        else if (typeof settings.failure != "function") {
-            console.log("Canvas2ImagePlugin Error: failure is not a function.");
-        } else if (!settings.canvas) {
-            console.log("Canvas2ImagePlugin Error: no canvas is assigned.");
-        }
-        else {
-            var canvas = (typeof settings.canvas === "string") ? document.getElementById(settings.canvas) : settings.canvas;
-            var imageData = canvas.toDataURL('image/jpeg').replace(/data:image\/jpeg;base64,/, '');
-            return cordova.exec(settings.success, settings.failure, "Canvas2ImagePlugin", "saveImageDataToLibrary", [imageData, settings.fileName, settings.album]);
-        }
+        var settings = Object.assign({}, defaults);
+        
+        var imageData = canvas.replace(/data:image\/jpeg;base64,/, '');
+        return cordova.exec(success, failure, "Canvas2ImagePlugin", "saveImageDataToLibrary", [imageData, settings.fileName, settings.album]);
     }
 };
 
